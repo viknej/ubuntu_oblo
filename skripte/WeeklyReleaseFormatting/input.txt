@@ -1,0 +1,6 @@
+19:47:03 * a8edc3d - Bug #188645: (2) Sonos stopped working (5 hours ago) <Aleksa Janjatovic>
+19:47:03 * 652c9cf - Task #190641 : Hidden device are visible on main gateway (3 days ago) <Goran Cordasic>
+19:47:03 * d6a5e23 - Task #190640 : MCO thermostats not can not be controlled from main gateway (4 days ago) <Goran Cordasic>
+19:47:03 * 8f9e3b5 - Bug #190693 : OGB crashes during device exclusion (4 days ago) <Goran Cordasic>
+19:47:03 * 60da6b4 - Task #190641 : Hidden device are visible on main gateway (3 days ago) <Goran Cordasic>
+19:47:03 * 9dd6382 - Task #190640 : MCO thermostats not can not be controlled from main gateway (4 days ago) <Goran Cordasic>

@@ -1,0 +1,40 @@
+    
+*%{font-size:1.5em;color:#5347c3}2346%*
+
+p(. 20.11.2023.
+
+table{margin-left:2em}.
+|=. *4.10.0 images*|=. *Clouds*|=. *doc400*|=. *doc400 + ogb*|=. *voc200*|=. *jco401*|=. *jco4032*|=. *shh600*|
+|"*rtrk*":https://redmine.rt-rk.com/projects/oblo/dmsf?folder_id=6059|test.oblo.rs||=. ✓|||||
+|/2. "*reliance*":https://redmine.rt-rk.com/projects/oblo/dmsf?folder_id=1126|jiohomeliving.com||=. ✓|=. ✓|=. ✓|=. ✓|=. ✓|
+|jiohome.oblo.rs||=. ✓|=. ✓|||=. ✓|
+|/2. "*eniwa*":https://redmine.rt-rk.com/projects/oblo/dmsf?folder_id=4818|test.livina.io|=. ✓||||||
+|cloud.livina.io|=. ✓||||||
+
+&nbsp;
+
+table{margin-left:2em}.
+|=. *Repo*|=. *Task*|=. *Commit*|=. *Developer*|=. *Gerrit*|
+
+|/0=. *OHM*
+
+|/0=. *OSM*
+
+|/0=. *OMB*
+
+|/0=. *OGB*
+
+|/0=. *WISE*
+
+|/0=. *SDK*
+
+|/0=. *UTILITY*
+
+&nbsp;
+
+|>. Bug #188645|(2) Sonos stopped working|%{color:green}Aleksa Janjatovic%|>. "1. link":|
+|>. Task #190641 |Hidden device are visible on main gateway|%{color:green}Goran Cordasic%|>. "2. link":|
+|>. Task #190640 |MCO thermostats not can not be controlled from main gateway|%{color:green}Goran Cordasic%|>. "3. link":|
+|>. Bug #190693 |OGB crashes during device exclusion|%{color:green}Goran Cordasic%|>. "4. link":|
+|>. Task #190641 |Hidden device are visible on main gateway|%{color:green}Goran Cordasic%|>. "5. link":|
+|>. Task #190640 |MCO thermostats not can not be controlled from main gateway|%{color:green}Goran Cordasic%|>. "6. link":|
