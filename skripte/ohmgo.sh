@@ -21,7 +21,7 @@ features=(
   "ZIGBEE-BASE"
   "ZIGBEE-ZNP"
   "ZWAVE"
-  "ONVIF"
+  #"ONVIF"
   "TUTK"
   "UPNP"
   "UPNP_SONOS"

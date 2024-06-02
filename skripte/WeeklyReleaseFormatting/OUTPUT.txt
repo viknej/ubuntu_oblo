@@ -1,13 +1,12 @@
     
-*%{font-size:1.5em;color:#5347c3}2346%*
+*%{font-size:1.5em;color:#5347c3}2412%*
 
-p(. 20.11.2023.
+p(. 22.03.2024.
 
 table{margin-left:2em}.
-|=. *4.10.0 images*|=. *Clouds*|=. *doc400*|=. *doc400 + ogb*|=. *voc200*|=. *jco401*|=. *jco4032*|=. *shh600*|
-|"*rtrk*":https://redmine.rt-rk.com/projects/oblo/dmsf?folder_id=6059|test.oblo.rs||=. ✓|||||
-|/2. "*reliance*":https://redmine.rt-rk.com/projects/oblo/dmsf?folder_id=1126|jiohomeliving.com||=. ✓|=. ✓|=. ✓|=. ✓|=. ✓|
-|jiohome.oblo.rs||=. ✓|=. ✓|||=. ✓|
+|=. *4.11.0 images*|=. *Clouds*|=. *doc400*|=. *doc400 + ogb*|=. *voc200*|=. *jco401*|=. *jco4032*|=. *shh600 + ogb*|
+|/1. "*rtrk*":https://redmine.rt-rk.com/projects/oblo/dmsf?folder_id=6059|test.oblo.rs||=. ✓|||||
+|/1. "*reliance*":https://redmine.rt-rk.com/projects/oblo/dmsf?folder_id=1126|broker.dev.smartliving.jio.com||=. ✓|=. ✓|=. ✓|=. ✓|=. ✓|
 |/2. "*eniwa*":https://redmine.rt-rk.com/projects/oblo/dmsf?folder_id=4818|test.livina.io|=. ✓||||||
 |cloud.livina.io|=. ✓||||||
 
@@ -32,9 +31,25 @@ table{margin-left:2em}.
 
 &nbsp;
 
-|>. Bug #188645|(2) Sonos stopped working|%{color:green}Aleksa Janjatovic%|>. "1. link":|
-|>. Task #190641 |Hidden device are visible on main gateway|%{color:green}Goran Cordasic%|>. "2. link":|
-|>. Task #190640 |MCO thermostats not can not be controlled from main gateway|%{color:green}Goran Cordasic%|>. "3. link":|
-|>. Bug #190693 |OGB crashes during device exclusion|%{color:green}Goran Cordasic%|>. "4. link":|
-|>. Task #190641 |Hidden device are visible on main gateway|%{color:green}Goran Cordasic%|>. "5. link":|
-|>. Task #190640 |MCO thermostats not can not be controlled from main gateway|%{color:green}Goran Cordasic%|>. "6. link":|
+|>. Bug #191257 |[OL][GW] Time does not update on MH7 after reboot GW|%{color:green}Goran Cordasic%|>. "1. link":|
+|>. Bug #190673 |[OBLO] On/Off Thermostat v5.2 doesn't work in Cool mode on Oblo app.|%{color:green}Goran Cordasic%|>. "2. link":|
+|>. Feature #189178|GW M2 controller support  + Matter bus implemented  + Added generic device  + A number of capabilities and clusters are implemented|%{color:green}Branislav Pjetar%|>. "3. link":|
+|>. Task #191125|Extend zwave reinterview with GW association set|%{color:green}Goran Cordasic%|>. "4. link":|
+|>. Task #188522|[MTR]Handle user data and factory reset event|%{color:green}nikola.mijatovic%|>. "5. link":|
+|>. Task #188505|OSM command for enabling Matter bridge|%{color:green}mladenm%|>. "6. link":|
+|>. Task #187441|Integrate OGB application to Radisys build system|%{color:green}Branislav Pjetar%|>. "7. link":|
+|>. Task #190736|Matter bridge controller QR code information for the bridge commissioning|%{color:green}apetrovski%|>. "8. link":|
+|>. Task #188505 OSM command for enabling Matter bridge|Task #188505 OSM command for enabling Matter bridge|%{color:green}mladenm%|>. "9. link":|
+|>. Bug #191277|Change lambda in controller manager to support C++11|%{color:green}mladenm%|>. "10. link":|
+|>. Bug #191274|[GW][OGB] Jenkins build failed for DOC400 which doesnt use matter|%{color:green}Branislav Pjetar%|>. "11. link":|
+|>. Bug #191273|[Matter] [Bridge] Roller Shutter not updating correctly|%{color:green}Marijana Jovicic%|>. "12. link":|
+|>. Bug #191121|Max limits of Matter bridge endpoints can be reached (there is no wrapping of endpoint ID's) part3|%{color:green}apetrovski%|>. "13. link":|
+|>. Bug #191273|Max limits of Matter bridge endpoints can be reached (there is no wrapping of endpoint ID's) part1|%{color:green}Vuk Cabrilo%|>. "14. link":|
+|>. Bug #191120 - Hidden device from OHM should not be visible on OGB|Bug #191120 - Hidden device from OHM should not be visible on OGB|%{color:green}Vuk Cabrilo%|>. "15. link":|
+|>. Bug #191252|Read kvs path from ogb.properties|%{color:green}nikola.mijatovic%|>. "16. link":|
+|>. Bug #191143|[GTW][MTR] Align Bridged Device Basic Information cluster with certification requirements|%{color:green}apetrovski%|>. "17. link":|
+|>. Bug #191144|Align Door lock cluster with certification requirements|%{color:green}Marijana Jovicic%|>. "18. link":|
+|>. Bug #191140|OGB properties file doesn't contain proper file path for mtr_cert_dir|%{color:green}nikola.mijatovic%|>. "19. link":|
+|>. Feature #188446|MATTER BRIDGE DEVICE|%{color:green}mladenm%|>. "20. link":|
+|>. Task #189121|Update Matter SDK to the latest codebase  + matter SDK updated to release v1.2.0.1  + jenkins build procedure modified  + matter SDK clone and bootstrap is always done if new chain is needed  + type-limits warning disabled for matter SDK bridge build  + added scripts for local build of APP package for SHH600|%{color:green}Branislav Pjetar%|>. "21. link":|
+|>. Task #190199|Extend SHH600 Docker build with Matter support [FIX]|%{color:green}Vuk Cabrilo%|>. "22. link":|

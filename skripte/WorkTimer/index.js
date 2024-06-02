@@ -2,7 +2,6 @@ const userId = 2872; //Go to your WTIS page and open ispector (F12). Search for 
 const domainUsername = "viktor";
 const domainPassword = process.env.MY_PASSWORD;
 
-var job_limit = 8*60*60*1000;
 var work_limit = 7.5*60*60*1000;
 
 const axios = require('axios');
@@ -36,45 +35,87 @@ if (!session) {
     login(user);
 }
 
-// Set date
+// Parse command line arguments
 const args = process.argv.slice(2);
-let date;
-if (args.length > 0) {
-    date = args[0];
-} else {
-    date = moment().format("YYYY-MM-DD");
+const monthly = args[0] === "m";
+
+function processMonth(year, month) {
+    const daysInMonth = new Date(year, month, 0).getDate();
+    var totalMilliseconds = 0;
+
+    for (let day = 1; day <= daysInMonth; day++) {
+        const formattedDay = day.toString().padStart(2, '0');
+        const date = `${year}-${month}-${formattedDay}`;
+        if (date > moment().format("YYYY-MM-DD")) break;  // Stop if date is in the future
+        main(date)
+        .then(dailyDeltaMilliseconds => {
+            totalMilliseconds += dailyDeltaMilliseconds;
+            if (date === moment().format("YYYY-MM-DD")) {
+                var monthDelta = getTimeDelta(totalMilliseconds);
+                console.log(`Month delta:  ${monthDelta}`);
+            }
+        })
+        .catch(error => {
+            
+        });
+    }
 }
 
-const dailyDeltasForMonth = args.length > 1;
+if (args.length === 0) {
+    // No additional arguments, use today's date
+    main(moment().format("YYYY-MM-DD"));
+} else if (args[0] === "m") {
+    // Month mode, with optional specific month and year
+    const currentDate = new Date();
+    const month = (args.length > 1 ? parseInt(args[1], 10) : currentDate.getMonth() + 1).toString().padStart(2, '0');
+    const year = args.length > 2 ? parseInt(args[2], 10) : currentDate.getFullYear();
 
-// Get table for specific date, parse, calculate and print
-axios.get(`http://wtis.rt-rk.com/newCore/async/getDayLog.php?date=${date}&eid=${userId}`, {headers: {
-    "Cookie": `domain=${user.domain}; ${session}`,
-}}).then(res => {
-    if (res.data.includes("Access denied")) {
-        login(user);
-    }
-    $ = cheerio.load(res.data.toString());
-    cheerioTableparser($);
-    var data = [];
-    var array = $("table").parsetable(false, false, false)
-    array[0].forEach(function(d, i) {
-        var Type = $("<div>" + array[0][i] + "</div>").text();
-        var Location = $("<div>" + array[1][i] + "</div>").text();
-        var Time = $("<div>" + array[2][i] + "</div>").text();
-        var Processed = $("<div>" + array[3][i] + "</div>").text();
-        var Valid = $("<div>" + array[4][i] + "</div>").text();
-        entries = Type + " " + Location + " " +  Time + " " +  Processed + " " +  Valid + "\n";
-        data.push(entries)
-    }); 
-    data.shift();
-    data.pop();
-    var processedEntries = processEntries(data.toString());
-    printTimeMessages(processedEntries);
-  })
-  .catch(error => {
-    console.error(error)
-  });
+    processMonth(year, month);
+} else {
+    // Specific date provided
+    main(args[0]);
+}
+
+function main(date){
+    return new Promise((resolve, reject) => {
+        // Get table for specific date, parse, calculate and print
+        axios.get(`http://wtis.rt-rk.com/newCore/async/getDayLog.php?date=${date}&eid=${userId}`, {
+                headers: {
+                    "Cookie": `domain=${user.domain}; ${session}`,
+                },
+            }).
+            then(res => {
+            // if (res.data.includes("Access denied")) {
+            //     login(user);
+            // }
+            //console.log(`${res.data}`);
+            $ = cheerio.load(res.data.toString());
+            cheerioTableparser($);
+            var data = [];
+            var array = $("table").parsetable(false, false, false)
+
+            array[0].forEach(function(d, i) {
+                var Type = $("<div>" + array[0][i] + "</div>").text();
+                var Location = $("<div>" + array[1][i] + "</div>").text();
+                var Time = $("<div>" + array[2][i] + "</div>").text();
+                var Processed = $("<div>" + array[3][i] + "</div>").text();
+                var Valid = $("<div>" + array[4][i] + "</div>").text();
+                entries = Type + " " + Location + " " +  Time + " " +  Processed + " " +  Valid + "\n";
+                data.push(entries)
+            });
+
+            data.shift();
+            data.pop();
+            var processedEntries = processEntries(data.toString());
+            var ret = printTimeMessages(processedEntries, date);
+            //console.log(`${data}`);
+            resolve(ret);
+          })
+          .catch(error => {
+            
+          });
+    });
+}
 
 function processEntries(entryContent){
     var formattedEntryContent = entryContent.replace(/\t/g, ' ').replace(/  +/g, ' ').replace(/,/g, '');
@@ -138,13 +179,6 @@ function getFirstEntryTime(entries) {
     return entries.length > 0 ? entries[0].time : null;
 }
 
-function getTotalJobTime(entries){
-    var currentTime = new Date().getTime();
-    var firstEntryTime = getFirstEntryTime(entries).getTime();
-    
-    return currentTime - firstEntryTime;
-}
-
 function reduceSameTypeConsecutiveEntries(entries) {
     // Remove entries of the same type that occur in groups of two or more
     for (let i = 0; i < entries.length - 1; i++) {
@@ -156,41 +190,42 @@ function reduceSameTypeConsecutiveEntries(entries) {
     return entries;
 }
 
-function printTimeMessages(entries) {
+function printTimeMessages(entries, date) {
     entries = reduceSameTypeConsecutiveEntries(entries);
     var firstEntryTime = getFirstEntryTime(entries);
     var totalWorkTime = getTotalWorkTime(entries);
-    var totalJobTime = getTotalJobTime(entries);
 
-    const A = totalWorkTime >= work_limit;
-    const B = totalJobTime >= job_limit;
-    const C = work_limit - totalWorkTime < job_limit - totalJobTime;
+    if (monthly) {
+        const totalWorkTimeDeltaString = getTimeDelta(totalWorkTime - work_limit);
+        const totalWorkTimeMinutes = Math.floor(totalWorkTime / 1000 / 60);
+        const work_limitMinutes = Math.floor(work_limit / 1000 / 60);
 
-    if (dailyDeltasForMonth) {
-        const totalWorkTimeDeltaString = getTimeDelta(totalWorkTime);
-        if (totalWorkTimeDeltaString.startsWith('+')) {
+        if (totalWorkTimeMinutes == work_limitMinutes) {
+            console.log('\x1b[36m%s\x1b[0m', `${date}:       0`);
+        } else if (totalWorkTimeDeltaString.startsWith('+')) {
             console.log('\x1b[32m%s\x1b[0m', `${date}:   ${totalWorkTimeDeltaString}`);
         } else {
             console.log('\x1b[91m%s\x1b[0m', `${date}:   ${totalWorkTimeDeltaString}`);
         }
+        return totalWorkTime - work_limit;
     } else {
-        console.log('\x1b[39m%s\x1b[0m', `\nLeave      Worked  Pauses`);
+        console.log('\x1b[39m%s\x1b[0m', `\nArrived  Leave      Worked  Pauses`);
 
         const firstEntryTimeFormatted = new Date(firstEntryTime).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: false });
+        //console.log(`${firstEntryTimeFormatted}`)
         const totalWorkTimeString = getTimeString(totalWorkTime);
         var totalPauseTime = getTotalPauseTime(entries);
         const totalPauseTimeString = getTimeString(totalPauseTime);
-      
-        if (A && B) {
-            console.log('\x1b[7;49;92m%s\x1b[0m\x1b[38;5;210m%s\x1b[0m', ` Now `,`        ${totalWorkTimeString}    ${totalPauseTimeString}\n`);
+
+        if (totalWorkTime >= work_limit) {
+            console.log('%s\x1b[7;49;92m%s\x1b[0m\x1b[38;5;210m%s\x1b[0m', `${firstEntryTimeFormatted}    `, ` Now`, `        ${totalWorkTimeString}    ${totalPauseTimeString}\n`);
         } else {
             const currentTimeFormatted = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: false });
-            const remainingTime = A && B ? 0 : A || C ? job_limit - totalJobTime : work_limit - totalWorkTime;
-            const remainingTimeString = getTimeString(remainingTime);
+            const remainingTime = work_limit - totalWorkTime;
             const timeHome = new Date(Date.now() + remainingTime);
             const timeHomeFormatted = timeHome.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: false });
             
-            console.log('\x1b[7;49;92m%s\x1b[0m\x1b[38;5;210m%s\x1b[0m', `${timeHomeFormatted}`, `        ${totalWorkTimeString}    ${totalPauseTimeString}`);
+            console.log('%s\x1b[7;49;92m%s\x1b[0m\x1b[38;5;210m%s\x1b[0m', `${firstEntryTimeFormatted}    `, `${timeHomeFormatted}`, `        ${totalWorkTimeString}    ${totalPauseTimeString}\n`);
         }
     }
 }
@@ -200,13 +235,16 @@ function getTimeString(time) {
     var minutes = Math.floor((time / 1000 / 60) % 60);
 
     // Add leading zero to minutes if less than 10
-    minutes = (minutes < 10 ? '0' : '') + minutes;
-
-    return hours + ':' + minutes;
+    minutesWithZero = (minutes < 10 ? '0' : '') + minutes;
+    if (hours === 0) {
+        const str = minutes < 10 ? ' ' : '';
+        return '  ' + str + minutes;
+    } else {
+        return hours + ':' + minutesWithZero;
+    }
 }
 
-function getTimeDelta(time) {
-    var timeDelta = time - work_limit;
+function getTimeDelta(timeDelta) {
     var sign = '+'
     if (timeDelta < 0) {
         sign = '-'

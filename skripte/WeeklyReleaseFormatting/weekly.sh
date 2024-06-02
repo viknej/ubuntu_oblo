@@ -31,15 +31,15 @@ convert_to_table() {
     # Write header to the file
     cat <<- EOF > $output_file
     
-*%{font-size:1.5em;color:#5347c3}2346%*
+*%{font-size:1.5em;color:#5347c3}2412%*
 
-p(. 08.04.2024.
+p(. 22.03.2024.
 
 table{margin-left:2em}.
-|=. *4.11.0 images*|=. *Clouds*|=. *doc400*|=. *doc400 + ogb*|=. *voc200*|=. *jco401*|=. *jco4032*|=. *shh600*|
-|"*rtrk*":https://redmine.rt-rk.com/projects/oblo/dmsf?folder_id=6059|test.oblo.rs||=. ✓|||||
+|=. *4.12.0 images*|=. *Clouds*|=. *doc400*|=. *doc400 + ogb*|=. *voc200*|=. *jco401*|=. *jco4032*|=. *shh600 + ogb*|
+|/1. "*rtrk*":https://redmine.rt-rk.com/projects/oblo/dmsf?folder_id=6059|test.oblo.rs||=. ✓|||||
 |/2. "*reliance*":https://redmine.rt-rk.com/projects/oblo/dmsf?folder_id=1126|jiohomeliving.com||=. ✓|=. ✓|=. ✓|=. ✓|=. ✓|
-|jiohome.oblo.rs||=. ✓|=. ✓|||=. ✓|
+|broker.dev.smartliving.jio.com||=. ✓|=. ✓|||=. ✓|
 |/2. "*eniwa*":https://redmine.rt-rk.com/projects/oblo/dmsf?folder_id=4818|test.livina.io|=. ✓||||||
 |cloud.livina.io|=. ✓||||||
 

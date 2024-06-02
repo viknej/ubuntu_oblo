@@ -46,9 +46,12 @@ function pullNewestRepo {
 }
 
 pullNewestRepo 03 58003 $OHM v4.21.0
-pullNewestRepo 26 9726 $OSM v1.24.0
+pullNewestRepo 67 72267 $OSM v1.24.0
 pullNewestRepo 34 9734 $OMB v1.24.0
 pullNewestRepo 09 62709 $OGB v1.1.0
 pullNewestRepo 61 41761 $WISE v2.5.0
 pullNewestRepo 90 30290 $SDK v2.3.0
 pullNewestRepo 54 52154 $UTIL v1.9.0
+
+
+# 26 9726 old OSM

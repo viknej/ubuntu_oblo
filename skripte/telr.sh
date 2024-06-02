@@ -1,11 +1,29 @@
-#!/usr/bin/env bash
+#!/bin/bash
 
-RADISYS_IP=192.168.0.100 # gateway IP
+MAC_SUFFIX=${1:-0ec2}
+
+# Run arp-scan and filter the output using awk
+IP_ADDRESS=$(sudo arp-scan -l | awk -v mac_suffix="$MAC_SUFFIX" '
+    {
+        gsub(/:/, "", $2) # Remove colons from the MAC address for comparison
+        if (substr($2, length($2) - length(mac_suffix) + 1) == mac_suffix) {
+            print $1
+            exit
+        }
+    }
+')
+
+# Check if an IP address was found
+if [ -z "$IP_ADDRESS" ]; then
+    echo "No device found with MAC address suffix $MAC_SUFFIX"
+    exit 1
+fi
+
 IMAGE_PATH=viktor@192.168.0.101:/home/viktor/Downloads # username, your IP, path to images
 
 # Use expect to handle telnet login
 expect -c "
-spawn telnet $RADISYS_IP
+spawn telnet $IP_ADDRESS
 expect \"login:\"
 send \"root\r\"
 expect \"Password:\"
@@ -26,8 +44,46 @@ send \"alias ogbprop='vi /userdata/usr/data/ogb/cfg/ogb.properties'\r\"
 send \"alias dosmstop='/etc/init.d/S99dosm stop'\r\"
 send \"alias dosmstart='/etc/init.d/S99dosm start'\r\"
 send \"alias killapps='killall -9 oblomb oblomanager gatewayBridge'\r\"
-send \"alias pids='echo ohm \\\$(pidof oblomanager) && echo osm \\\$(pidof systemManager) && echo omb \\\$(pidof oblomb) && echo ogb \\\$(pidof gatewayBridge)'\r\"
+send \"alias pids='echo ohm \\\$(pidof oblomanager) &&
+                   echo osm \\\$(pidof systemManager) &&
+                   echo omb \\\$(pidof oblomb) &&
+                   echo ogb \\\$(pidof gatewayBridge)'\r\"
 send \"alias deldbs='rm -rf /userdata/mnt/data/*/*'\r\"
+send \"alias ll='ls -la'\r\"
+send \"alias aliases='clear &&
+                      echo \\\"----------------------------------------------\\\" &&
+                      echo \\\"             ALIASES\\\" &&
+                      echo \\\"----------------------------------------------\\\" &&
+                      echo \\\"ohmtail    = tail ohm log\\\" &&
+                      echo \\\"osmtail    = tail osm log\\\" &&
+                      echo \\\"ombtail    = tail omb log\\\" &&
+                      echo \\\"ogbtail    = tail ogb log\\\" &&
+                      echo \\\" \\\" &&
+                      echo \\\"ohmprop    = edit ohm.properties\\\" &&
+                      echo \\\"osmprop    = edit osm.properties\\\" &&
+                      echo \\\"ombprop    = edit oblomb.properties\\\" &&
+                      echo \\\"ogbprop    = edit ogb.properties\\\" &&
+                      echo \\\" \\\" &&
+                      echo \\\"creds      = print GW serial and security code\\\" &&
+                      echo \\\"logs       = navigate to logs folder\\\" &&
+                      echo \\\"pids       = PIDs of ohm, osm, omb, ogb\\\" &&
+                      echo \\\"versionini = edit version.ini\\\" &&
+                      echo \\\" \\\" &&
+                      echo \\\"app        = run app update\\\" &&
+                      echo \\\"full       = run full update\\\" &&
+                      echo \\\"deldbs     = delete all databases\\\" &&
+                      echo \\\"dosmstart  = start dosm\\\" &&
+                      echo \\\"dosmstop   = stop dosm\\\" &&
+                      echo \\\"killapps   = kill omb, ohm, ogb\\\" &&
+                      echo \\\" \\\" &&
+                      echo \\\" aliases   = list all aliases\\\" &&
+                      echo \\\" cls       = clear screen\\\" &&
+                      echo \\\" ll        = ls -la (detailed folder content)\\\" &&
+                      echo \\\" q         = exit telnet\\\" &&
+                      echo \\\"----------------------------------------------\\\"'\r\"
+send \"alias cls='clear'\r\"
+send \"alias q='exit'\r\"
 send \"clear\r\"
+send \"aliases\r\"
 interact
 "

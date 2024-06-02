@@ -1,6 +1,22 @@
-19:47:03 * a8edc3d - Bug #188645: (2) Sonos stopped working (5 hours ago) <Aleksa Janjatovic>
-19:47:03 * 652c9cf - Task #190641 : Hidden device are visible on main gateway (3 days ago) <Goran Cordasic>
-19:47:03 * d6a5e23 - Task #190640 : MCO thermostats not can not be controlled from main gateway (4 days ago) <Goran Cordasic>
-19:47:03 * 8f9e3b5 - Bug #190693 : OGB crashes during device exclusion (4 days ago) <Goran Cordasic>
-19:47:03 * 60da6b4 - Task #190641 : Hidden device are visible on main gateway (3 days ago) <Goran Cordasic>
-19:47:03 * 9dd6382 - Task #190640 : MCO thermostats not can not be controlled from main gateway (4 days ago) <Goran Cordasic>
+17:12:53 * 1e1979b - Bug #191257 : [OL][GW] Time does not update on MH7 after reboot GW (3 days ago) <Goran Cordasic>
+17:12:53 * f15dc9d - Bug #190673 : [OBLO] On/Off Thermostat v5.2 doesn't work in Cool mode on Oblo app. (3 days ago) <Goran Cordasic>
+17:12:53 * d2c18a6 - Feature #189178: GW M2 controller support  + Matter bus implemented  + Added generic device  + A number of capabilities and clusters are implemented (3 days ago) <Branislav Pjetar>
+17:12:53 * 9718d51 - Task #191125: Extend zwave reinterview with GW association set (7 days ago) <Goran Cordasic>
+17:12:53 * 60f48b5 - Task #188522: [MTR]Handle user data and factory reset event (3 days ago) <nikola.mijatovic>
+17:12:53 * 9e2c927 - Task #188505: OSM command for enabling Matter bridge (3 days ago) <mladenm>
+17:12:53 * ce05ef5 - Task #187441: Integrate OGB application to Radisys build system (3 days ago) <Branislav Pjetar>
+17:12:53 * 363d7a7 - Task #190736: Matter bridge controller QR code information for the bridge commissioning (3 days ago) <apetrovski>
+17:12:53 * 7df5f61 - Task #188505 OSM command for enabling Matter bridge (7 days ago) <mladenm>
+17:12:53 * 3312c01 - Bug #191277: Change lambda in controller manager to support C++11 (39 minutes ago) <mladenm>
+17:12:53 * 42f9ac1 - Bug #191274: [GW][OGB] Jenkins build failed for DOC400 which doesnt use matter (39 minutes ago) <Branislav Pjetar>
+17:12:53 * 828cbaf - Bug #191273: [Matter] [Bridge] Roller Shutter not updating correctly (2 hours ago) <Marijana Jovicic>
+17:12:53 * 6b7afb4 - Bug #191121: Max limits of Matter bridge endpoints can be reached (there is no wrapping of endpoint ID's) part3 (2 hours ago) <apetrovski>
+17:12:53 * be88376 - Bug #191273: Max limits of Matter bridge endpoints can be reached (there is no wrapping of endpoint ID's) part1 (2 hours ago) <Vuk Cabrilo>
+17:12:53 * 360afe6 - Bug #191120 - Hidden device from OHM should not be visible on OGB (4 days ago) <Vuk Cabrilo>
+17:12:53 * b2987e3 - Bug #191252: Read kvs path from ogb.properties (4 days ago) <nikola.mijatovic>
+17:12:53 * 49a4496 - Bug #191143: [GTW][MTR] Align Bridged Device Basic Information cluster with certification requirements (4 days ago) <apetrovski>
+17:12:53 * 9243474 - Bug #191144: Align Door lock cluster with certification requirements (4 days ago) <Marijana Jovicic>
+17:12:53 * 883fd4c - Bug #191140: OGB properties file doesn't contain proper file path for mtr_cert_dir (4 days ago) <nikola.mijatovic>
+17:12:53 * 6120194 - Feature #188446: MATTER BRIDGE DEVICE (4 days ago) <mladenm>
+17:12:53 * 65cce66 - Task #189121: Update Matter SDK to the latest codebase  + matter SDK updated to release v1.2.0.1  + jenkins build procedure modified  + matter SDK clone and bootstrap is always done if new chain is needed  + type-limits warning disabled for matter SDK bridge build  + added scripts for local build of APP package for SHH600 (3 days ago) <Branislav Pjetar>
+17:12:53 * 9d9a47f - Task #190199: Extend SHH600 Docker build with Matter support [FIX] (3 days ago) <Vuk Cabrilo>
